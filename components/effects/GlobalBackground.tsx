@@ -1,7 +1,6 @@
 export default function GlobalBackground() {
   return (
     <>
-      {/* ── Keyframes (injected once, server-safe) ── */}
       <style>{`
         /* Orb A: drifts top-left → bottom-right */
         @keyframes orb-a {

@@ -220,7 +220,7 @@ function OrbitItem({ radius, speed, angle, y, icon, label }: OrbitItemType) {
             className="
               absolute left-1/2 top-full mt-2.5 -translate-x-1/2
               rounded-full border border-white/[0.07]
-              bg-black/92 px-2.5 py-[3px]
+              bg-black/92 px-2.5 py-0.75
               text-[8px] uppercase tracking-[0.28em] text-zinc-500
               opacity-0 transition-opacity duration-300
               group-hover:opacity-100 whitespace-nowrap
@@ -242,10 +242,10 @@ export default function HeroScene() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_65%_at_68%_50%,rgba(37,99,235,0.13),transparent_72%)]" />
 
       {/* Depth fades */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/8 via-transparent to-black/85" />
+      <div className="absolute inset-0 bg-linear-to-b from-black/8 via-transparent to-black/85" />
 
       {/* Left-side content protection gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#050508] from-[18%] via-[#050508]/75 via-[42%] to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#050508] from-18% via-[#050508]/75 via-42% to-transparent" />
 
       {/* Ultra-subtle grid */}
       <div
