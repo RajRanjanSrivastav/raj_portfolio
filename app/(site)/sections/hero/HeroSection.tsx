@@ -1,70 +1,132 @@
 import HeroMotion from "./HeroMotion";
+import HeroScene from "./HeroScene";
 
+/* ─── Tech marquee ────────────────────────────────────────── */
+const STACK = [
+  "React", "TypeScript", "Next.js", "Three.js",
+  "Node.js", "Framer Motion", "Angular", "GraphQL",
+  "Tailwind CSS", "PostgreSQL", "Figma", "Docker",
+];
+
+function Marquee() {
+  const items = [...STACK, ...STACK]; // duplicate for seamless loop
+
+  return (
+    <div className="relative overflow-hidden border-t border-white/[0.05] bg-[#050508]/70 backdrop-blur-sm py-[13px]">
+      {/* Edge fades */}
+      <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#050508] to-transparent z-10" />
+      <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#050508] to-transparent z-10" />
+
+      <div
+        className="flex whitespace-nowrap"
+        style={{ animation: "hero-marquee 30s linear infinite", willChange: "transform" }}
+      >
+        {items.map((tech, i) => (
+          <span
+            key={i}
+            className="inline-flex items-center gap-5 px-5 text-[8.5px] uppercase tracking-[0.3em] text-zinc-700 font-light"
+          >
+            {tech}
+            <span className="text-zinc-800 text-[5px]">◆</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Scroll indicator ────────────────────────────────────── */
+function ScrollCue() {
+  return (
+    <div className="flex flex-col items-center gap-2.5" aria-hidden="true">
+      <div className="relative h-[48px] w-px overflow-hidden bg-white/[0.09]">
+        <div
+          className="absolute top-0 left-0 w-full bg-gradient-to-b from-transparent via-white/50 to-transparent"
+          style={{
+            height: "50%",
+            animation: "scroll-drop 2s ease-in-out infinite",
+          }}
+        />
+      </div>
+      <span className="text-[8.5px] uppercase tracking-[0.35em] text-zinc-700 font-light">
+        Scroll
+      </span>
+    </div>
+  );
+}
+
+/* ─── Hero section ────────────────────────────────────────── */
 export default function HeroSection() {
   return (
-    <section
-      aria-label="Hero Section"
-      className="relative min-h-screen flex items-center justify-center px-6 md:px-12 overflow-hidden"
-    >
-      {/* 🌌 Ambient Background Glow */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-500/20 blur-[140px] rounded-full" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-500/10 blur-[120px] rounded-full" />
-      </div>
+    <>
+      <style>{`
+        @keyframes hero-marquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        @keyframes scroll-drop {
+          0%   { transform: translateY(-100%); opacity: 0; }
+          15%  { opacity: 1; }
+          85%  { opacity: 1; }
+          100% { transform: translateY(220%); opacity: 0; }
+        }
+      `}</style>
 
-      {/* 📦 Content Container */}
-      <div className="w-full max-w-6xl grid md:grid-cols-2 gap-12 items-center">
-        
-        {/* 🧠 LEFT: Text + Motion */}
-        <div className="space-y-6">
-          <HeroMotion />
+      <section
+        aria-label="Hero"
+        className="relative min-h-screen flex flex-col overflow-hidden bg-[#050508]"
+      >
+        {/* ── Three.js scene fills the background ── */}
+        <HeroScene />
 
-          <p className="text-zinc-400 text-lg max-w-xl leading-relaxed">
-            I build high-performance, scalable, and visually refined web
-            experiences using modern frontend architecture.
-          </p>
+        {/* ── Noise / grain overlay ── */}
+        <svg
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[2] h-full w-full opacity-[0.02]"
+        >
+          <filter id="hero-grain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#hero-grain)" />
+        </svg>
 
-          {/* CTA */}
-          <div className="flex gap-4">
-            <a
-              href="#projects"
-              className="px-6 py-3 rounded-xl bg-white text-black font-medium hover:scale-105 transition-transform"
-            >
-              View Work
-            </a>
-
-            <a
-              href="#contact"
-              className="px-6 py-3 rounded-xl border border-white/10 backdrop-blur-md text-white hover:bg-white/5 transition"
-            >
-              Contact Me
-            </a>
-          </div>
-        </div>
-
-        {/* 💻 RIGHT: Glass Card (visual balance) */}
-        <div className="relative">
-          <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 shadow-2xl">
-            <div className="text-sm text-zinc-400 mb-4">
-              Currently Building
-            </div>
-
-            <div className="space-y-3">
-              <div className="h-3 bg-white/10 rounded w-3/4" />
-              <div className="h-3 bg-white/10 rounded w-1/2" />
-              <div className="h-3 bg-white/10 rounded w-2/3" />
+        {/* ── Hero content — left-aligned ── */}
+        {/*
+          max-w-[560px] caps the text column so the 3D scene
+          remains dramatically visible on the right side.
+        */}
+        <div className="relative z-10 flex-1 flex items-center px-8 md:px-14 lg:px-20">
+          <div className="w-full max-w-7xl mx-auto pt-8 pb-14">
+            <div className="max-w-[560px] lg:max-w-[620px]">
+              <HeroMotion />
             </div>
           </div>
         </div>
-      </div>
 
-      {/* 🧭 Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <div className="w-[1px] h-10 bg-white/20 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-white animate-scroll" />
+        {/* ── Bottom strip: page index + scroll cue + year ── */}
+        <div className="relative z-10 flex items-end justify-between px-8 md:px-14 lg:px-20 pb-7">
+          {/* Index */}
+          <div className="flex items-center gap-3">
+            <div className="w-6 h-px bg-white/15" />
+            <span className="text-[8.5px] uppercase tracking-[0.35em] text-zinc-700 font-light">
+              01
+            </span>
+          </div>
+
+          <ScrollCue />
+
+          {/* Year */}
+          <span className="text-[8.5px] uppercase tracking-[0.3em] text-zinc-800 font-light">
+            2025
+          </span>
         </div>
-        <span className="text-xs text-zinc-500">Scroll</span>
-      </div>
-    </section>
+
+        {/* ── Scrolling tech stack marquee ── */}
+        <div className="relative z-10">
+          <Marquee />
+        </div>
+      </section>
+    </>
   );
 }

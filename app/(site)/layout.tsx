@@ -16,7 +16,7 @@ export default function SiteLayout({
       <Navbar />
 
       {/* 📄 Page Content */}
-      <main className="bg-black text-white min-h-screen pt-20">{children}</main>
+      <main className="text-white min-h-screen pt-20">{children}</main>
       <Footer />
     </SmoothScroll>
   );

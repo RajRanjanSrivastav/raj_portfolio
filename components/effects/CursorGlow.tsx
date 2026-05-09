@@ -19,7 +19,7 @@ export default function CursorGlow() {
           y: position.y - 150,
         }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="w-[300px] h-[300px] rounded-full bg-blue-500/10 blur-3xl"
+        className="w-75 h-75 rounded-full bg-blue-500/10 blur-3xl"
       />
     </motion.div>
   );
